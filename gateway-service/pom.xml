@@ -31,10 +31,12 @@
         <orj-slf4j-version>1.7.24</orj-slf4j-version>
         <dubbo.version>2.8.4</dubbo.version>
         <zkclient.version> 0.1</zkclient.version>
-        <tomcat-embed-core-version>8.5.19</tomcat-embed-core-version>
+        <tomcat-embed-core-version>8.5.37</tomcat-embed-core-version>
         <ratelimit-version>0.4.4</ratelimit-version>
         <jedis-version>2.8.2</jedis-version>
         <jwt-version>3.2.0</jwt-version>
+        <jackson-core-version>2.6.7</jackson-core-version>
+        <jackson-version>2.6.7.2</jackson-version>
     </properties>
 
     <!-- 项目依赖私服地址 -->
@@ -169,12 +171,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.4.1</version>
+            <version>${jackson-core-version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.4.1</version>
+            <version>${jackson-version}</version>
         </dependency>
     </dependencies>
 
