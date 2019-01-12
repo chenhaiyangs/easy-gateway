@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:config="https://com.github.chenhaiyangs/ruubypay-framework-configx/config"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       https://com.github.chenhaiyangs/ruubypay-framework-configx/config
+       https://com.github.chenhaiyangs/ruubypay-framework-configx/config/config.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--扫描配置根路径 -->
+    <context:component-scan base-package="com.github.chenhaiyangs.gateway.service"/>
+
+    <!--加载zookeeper客户端信息及版本信息-->
+    <util:properties id="gatewayConfig" location="classpath:gateway.properties" />
+    <!-- 配置中心链接地址 -->
+    <config:profile connect-str="#{gatewayConfig['zk.address']}"
+                    root-node="#{gatewayConfig['root-node']}"
+                    version="#{gatewayConfig['zk.configs.version']}" />
+
+    <!-- 网关的网络相关基本配置 -->
+    <config:group id="gatawayBasic" node="basic-group"/>
+    <!-- 数据源配置,获取api信息和组件信息 -->
+    <config:group id="dataSourceGroup" node="datasource-group"/>
+    <!-- redis配置 -->
+    <config:group id="redisGroup" node="redis-group"/>
+    <!-- 全局ip黑白名单group -->
+    <config:group id="blacklistGroup" node="blacklist-group"/>
+    <!-- 全局禁用组件集 -->
+    <config:group id="disabledHandlerGroup" node="disabled-handler-group"/>
+</beans>

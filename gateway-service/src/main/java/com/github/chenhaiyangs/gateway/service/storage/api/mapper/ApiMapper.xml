@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--suppress ALL -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.chenhaiyangs.gateway.service.storage.api.mapper.ApiMapper" >
+
+    <!-- 查询全部api -->
+    <select id="findAll" resultType="com.github.chenhaiyangs.gateway.common.model.Api" >
+        select
+        id,
+        name,
+        path,
+        description,
+        login_api as LoginApi,
+        scopes
+        from gateway_api
+    </select>
+
+    <!-- 根据Id查询Api -->
+    <select id="selectApiById" resultType="com.github.chenhaiyangs.gateway.common.model.Api">
+        select
+        id,
+        name,
+        path,
+        description,
+        login_api as LoginApi,
+        scopes
+        from gateway_api
+        where id=#{apiId}
+    </select>
+
+
+</mapper>

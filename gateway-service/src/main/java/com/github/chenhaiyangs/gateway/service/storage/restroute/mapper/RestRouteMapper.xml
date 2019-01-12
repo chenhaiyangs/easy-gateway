@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--suppress ALL -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.chenhaiyangs.gateway.service.storage.restroute.mapper.RestRouteMapper" >
+
+    <!-- 查询全部 -->
+    <select id="findAll" resultType="com.github.chenhaiyangs.gateway.service.storage.restroute.vo.RestRoute" >
+        select
+        id,
+        api_id as apiId,
+        route_uri as routeUri,
+        route_list as routeList,
+        `type`
+        from gateway_restful_route
+    </select>
+
+
+    <!-- 根据id查询 -->
+    <select id="selectById" resultType="com.github.chenhaiyangs.gateway.service.storage.restroute.vo.RestRoute">
+        select
+        id,
+        api_id as apiId,
+        route_uri as routeUri,
+        route_list as routeList,
+        `type`
+        from gateway_restful_route
+        where id=#{id}
+    </select>
+</mapper>

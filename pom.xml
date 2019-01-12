@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.chenhaiyangs</groupId>
+    <artifactId>easy-gateway</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+
+    <name>gateway-package</name>
+
+    <description>API网关,一款对有body的http请求的通用处理拦截</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <modules>
+        <module>gateway-core</module>
+        <module>gateway-common</module>
+        <module>gateway-service</module>
+        <module>gateway-admin</module>
+    </modules>
+
+</project>

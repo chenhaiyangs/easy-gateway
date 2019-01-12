@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--suppress ALL -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.chenhaiyangs.gateway.service.storage.sign.mapper.SignConfigMapper" >
+
+    <!-- 查询全部-->
+    <select id="findAll" resultType="com.github.chenhaiyangs.gateway.service.storage.sign.vo.RequestSignConfig" >
+        select
+        id,
+        api_id as apiId,
+        forbidden
+        from gateway_sign_config
+    </select>
+
+
+    <!-- 根据id查询 -->
+    <select id="selectById" resultType="com.github.chenhaiyangs.gateway.service.storage.sign.vo.RequestSignConfig">
+        select
+        id,
+        api_id as apiId,
+        forbidden
+        from gateway_sign_config
+        where id=#{id}
+    </select>
+</mapper>

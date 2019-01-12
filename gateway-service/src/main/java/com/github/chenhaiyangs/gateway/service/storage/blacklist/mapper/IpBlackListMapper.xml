@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--suppress ALL -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.chenhaiyangs.gateway.service.storage.blacklist.mapper.IpBlackListMapper" >
+
+    <!-- 查询全部 -->
+    <select id="findAll" resultType="com.github.chenhaiyangs.gateway.service.storage.blacklist.vo.IpBlackList" >
+        select
+        id,
+        api_id as apiId,
+        blacklist,
+        forbidden
+        from gateway_ip_blacklist
+    </select>
+
+
+    <!-- 根据id查询 -->
+    <select id="selectById" resultType="com.github.chenhaiyangs.gateway.service.storage.blacklist.vo.IpBlackList">
+        select
+        id,
+        api_id as apiId,
+        blacklist,
+        forbidden
+        from gateway_ip_blacklist
+        where id=#{id}
+    </select>
+</mapper>

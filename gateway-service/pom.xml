@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>easy-gateway</artifactId>
+        <groupId>com.github.chenhaiyangs</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>gateway-service</artifactId>
+
+    <name>gateway-service</name>
+
+    <description>
+        gateway-网关的service核心层，主要实现一系列的preHandler和PostHandler的业务代码 实现可定制化逻辑
+    </description>
+
+    <properties>
+        <mybatis.version>3.3.1</mybatis.version>
+        <mybatis-spring.version>1.2.2</mybatis-spring.version>
+        <mysql-connector-java.version>5.1.18</mysql-connector-java.version>
+        <druid.version>1.0.12</druid.version>
+        <spring-version>5.0.7.RELEASE</spring-version>
+        <gatewaycore-version>1.0.0</gatewaycore-version>
+        <logback-version>1.2.3</logback-version>
+        <configx-version>1.0.0</configx-version>
+        <ruubypay-ratelimit-bucket4j-version>1.1.0</ruubypay-ratelimit-bucket4j-version>
+        <hystrix-version>1.5.1</hystrix-version>
+        <orj-slf4j-version>1.7.24</orj-slf4j-version>
+        <dubbo.version>2.8.4</dubbo.version>
+        <zkclient.version> 0.1</zkclient.version>
+        <tomcat-embed-core-version>8.5.19</tomcat-embed-core-version>
+        <ratelimit-version>0.4.4</ratelimit-version>
+        <jedis-version>2.8.2</jedis-version>
+        <jwt-version>3.2.0</jwt-version>
+    </properties>
+
+    <!-- 项目依赖私服地址 -->
+
+    <dependencies>
+        <!-- api网关core -->
+        <dependency>
+            <artifactId>gateway-core</artifactId>
+            <groupId>com.github.chenhaiyangs</groupId>
+            <version>${gatewaycore-version}</version>
+        </dependency>
+        <!-- Spring支持 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+        <!-- 配置中心工具包 -->
+        <dependency>
+            <groupId>com.github.chenhaiyangs</groupId>
+            <artifactId>ruubypay-configx-core</artifactId>
+            <version>${configx-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-x-discovery</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+        <!-- 限流组件，使用ratelimitj -->
+        <!-- https://mvnrepository.com/artifact/es.moki.ratelimitj/ratelimitj-core -->
+        <dependency>
+            <groupId>es.moki.ratelimitj</groupId>
+            <artifactId>ratelimitj-core</artifactId>
+            <version>${ratelimit-version}</version>
+        </dependency>
+        <!-- 本地限流 -->
+        <dependency>
+            <groupId>es.moki.ratelimitj</groupId>
+            <artifactId>ratelimitj-inmemory</artifactId>
+            <version>${ratelimit-version}</version>
+        </dependency>
+        <!-- 分布式限流-使用redis的限流策略 -->
+        <dependency>
+            <groupId>es.moki.ratelimitj</groupId>
+            <artifactId>ratelimitj-redis</artifactId>
+            <version>${ratelimit-version}</version>
+        </dependency>
+        <!-- 熔断组件 -->
+        <dependency>
+            <groupId>com.netflix.hystrix</groupId>
+            <artifactId>hystrix-core</artifactId>
+            <version>${hystrix-version}</version>
+        </dependency>
+        <dependency>
+             <groupId>com.netflix.hystrix</groupId>
+             <artifactId>hystrix-metrics-event-stream</artifactId>
+             <version>${hystrix-version}</version>
+        </dependency>
+        <!-- 网关搜集指标需要用到tomcat -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat-embed-core-version}</version>
+        </dependency>
+        <!-- logback支持 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${orj-slf4j-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-version}</version>
+        </dependency>
+        <!-- 日志桥接工具：排除现有commons-logging依赖的影响。
+        如果你的jar包中有commons-logging打印日志，jcl动态桥架工具会将其骗到slf4j的日志系统中-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+        <!-- 数据库连接池 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <!--redis 依赖-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis-version}</version>
+        </dependency>
+        <!-- jwt token -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${jwt-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!--build command:mvn clean package-->
+        <finalName>gateway-service</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}/classes</targetPath>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}/</targetPath>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/config-init.xml</exclude>
+                    <exclude>**/spring-config/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <!-- 是否替换资源中的属性-->
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib</classpathPrefix>
+                            <mainClass>com.github.chenhaiyangs.gateway.service.ApiGateWayApplication</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>./</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <excludes>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.properties.sample</exclude>
+                        <exclude>**/logback.xml</exclude>
+                        <exclude>**/hazelcast.xml</exclude>
+                        <exclude>**/*.md</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!--拷贝依赖包到指定位置-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
